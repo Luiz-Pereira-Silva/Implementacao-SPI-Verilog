@@ -1,0 +1,14 @@
+module RegistradorIN(input wire clock, serial_in, clear, output reg[7:0] registrador_out);
+	reg [7:0] registrador;
+	
+	always(posedge clock, negedge clear) begin
+		if(not clear) begin
+			registrador <= 8'h0;
+		end else begin
+			if(clock) begin
+				registrador <= {registrador[7:1], serial_in}
+			end
+		end
+		registrador_out <= registrador
+	end
+endmodule
