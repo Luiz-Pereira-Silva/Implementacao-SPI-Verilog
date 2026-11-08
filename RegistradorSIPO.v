@@ -8,10 +8,10 @@ module RegistradorSIPO (input wire 		  clk, clr_n, sample, last_bit, serial_in,
 		end
 		else begin
 			if (sample) begin
-				registrador <= {registrador[6:0], serial_in};
+				registrador = {registrador[6:0], serial_in};
 				if (last_bit) begin
-					parallel_out <= registrador;
 					valid <= 1'h1;
+					parallel_out <= registrador;
 				end
 				else begin
 					valid <= 1'h0;

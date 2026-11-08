@@ -1,15 +1,19 @@
 m255
 K4
 z2
-Z0 !s12c _opt1
+Z0 !s12c _opt
 Z1 !s99 nomlopt
+R0
+R1
+Z2 !s12c _opt1
+R1
 !s12c _opt2
+R1
+R2
 R1
 R0
 R1
-Z2 !s12c _opt
-R1
-R2
+R0
 R1
 !s11f vlog 2025.2 2025.05, May 31 2025
 13
@@ -22,53 +26,19 @@ Z3 d/home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1
 T_opt
 !i145 1
 !i144 0
-!s110 1794175993
-VPW;IMi]280>lZTXK2CKah0
-Z4 04 18 4 work RegistradorPISO_tb fast 0
-=1-ec4c8ce76927-6af0f3f9-6c962-3e2f
+!s110 1794179019
+V:ADZ5am3`_8=JHa[]@e^[0
+04 18 4 work RegistradorSIPO_tb fast 0
+=1-ec4c8ce76927-6af0ffcb-a1f3c-499d
 R1
-Z5 !s12f OEM100
-Z6 !s12b OEM100
-Z7 !s124 OEM10U2 
-Z8 !s135 nogc
-o-quiet -auto_acc_if_foreign -work work
-Z9 tCvgOpt 0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U2 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work work +acc
+Z4 tCvgOpt 0
 n@_opt
-Z10 OL;O;2025.2;82
-R3
-T_opt1
-!i145 1
-!i144 0
-!s110 1794177094
-VU4G8;kjViS<2miaB3GZec0
-R4
-=1-ec4c8ce76927-6af0f846-1d777-45ae
-R1
-R5
-R6
-R7
-R8
-Z11 o-quiet -auto_acc_if_foreign -work work +acc
-R9
-n@_opt1
-R10
-T_opt2
-!i145 1
-!i144 0
-!s110 1794176696
-VAg]8UQZK[>97e?@;i]^6b0
-04 15 4 work RegistradorPISO fast 0
-=1-ec4c8ce76927-6af0f6b8-88984-3fbb
-R1
-R5
-R6
-!s124 OEM10U1 
-R8
-R11
-R9
-n@_opt2
-R10
-R3
+OL;O;2025.2;82
 vPeriferico
 2Periferico.v
 !s110 1794175015
@@ -81,8 +51,8 @@ w1794173899
 FPeriferico.v
 !i122 1
 L0 1 4
-Z12 VDg1SIo80bB@j0V0VzS_@n1
-Z13 OL;L;2025.2;82
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2025.2;82
 r1
 !s85 0
 31
@@ -90,8 +60,8 @@ r1
 !s107 Periferico.v|
 !s90 -reportprogress|300|Periferico.v|
 !i113 0
-Z14 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R9
+Z7 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
 n@periferico
 vRegistradorPISO
 2RegistradorPISO.v
@@ -105,8 +75,8 @@ w1794176644
 FRegistradorPISO.v
 !i122 8
 L0 1 20
-R12
-R13
+R5
+R6
 r1
 !s85 0
 31
@@ -114,8 +84,8 @@ r1
 !s107 RegistradorPISO.v|
 !s90 -reportprogress|300|RegistradorPISO.v|
 !i113 0
-R14
-R9
+R7
+R4
 n@registrador@p@i@s@o
 vRegistradorPISO_tb
 2RegistradorPISO_tb.v
@@ -129,8 +99,8 @@ w1794177045
 FRegistradorPISO_tb.v
 !i122 7
 L0 4 85
-R12
-R13
+R5
+R6
 r1
 !s85 0
 31
@@ -138,6 +108,54 @@ r1
 !s107 RegistradorPISO_tb.v|
 !s90 -reportprogress|300|RegistradorPISO_tb.v|
 !i113 0
-R14
-R9
+R7
+R4
 n@registrador@p@i@s@o_tb
+vRegistradorSIPO
+2RegistradorSIPO.v
+!s110 1794178997
+!i10b 1
+!s100 7n7HaWec[iN8<1M?@VkKZ3
+I5><FRUYa;SzG58b<G4T4Z0
+R3
+w1794178964
+8RegistradorSIPO.v
+FRegistradorSIPO.v
+!i122 11
+L0 1 22
+R5
+R6
+r1
+!s85 0
+31
+!s108 1794178997.000000
+!s107 RegistradorSIPO.v|
+!s90 -reportprogress|300|RegistradorSIPO.v|
+!i113 0
+R7
+R4
+n@registrador@s@i@p@o
+vRegistradorSIPO_tb
+2RegistradorSIPO_tb.v
+!s110 1794177795
+!i10b 1
+!s100 Xzl<]eLj@RGQlTEhIm>Eh0
+IfJ=FBYzjAUJjmA6_RN^D02
+R3
+w1794177770
+8RegistradorSIPO_tb.v
+FRegistradorSIPO_tb.v
+!i122 10
+L0 4 117
+R5
+R6
+r1
+!s85 0
+31
+!s108 1794177795.000000
+!s107 RegistradorSIPO_tb.v|
+!s90 -reportprogress|300|RegistradorSIPO_tb.v|
+!i113 0
+R7
+R4
+n@registrador@s@i@p@o_tb
