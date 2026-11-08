@@ -1,5 +1,5 @@
 Analysis & Synthesis report for ComunicacaoSPI
-Sun Nov  8 17:41:50 2026
+Sun Nov  8 19:28:27 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -37,7 +37,7 @@ on the Quartus Prime software download page.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +-----------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status ; Failed - Sun Nov  8 17:41:50 2026               ;
+; Analysis & Synthesis Status ; Failed - Sun Nov  8 19:28:27 2026               ;
 ; Quartus Prime Version       ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name               ; ComunicacaoSPI                                  ;
 ; Top-level Entity Name       ; ComunicacaoSPI                                  ;
@@ -161,24 +161,31 @@ on the Quartus Prime software download page.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Nov  8 17:41:48 2026
+    Info: Processing started: Sun Nov  8 19:28:26 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ComunicacaoSPI -c ComunicacaoSPI
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file RegistradorSIPO_tb.v
+    Info (12023): Found entity 1: RegistradorSIPO_tb File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/RegistradorSIPO_tb.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file RegistradorPISO_tb.v
+    Info (12023): Found entity 1: RegistradorPISO_tb File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/RegistradorPISO_tb.v Line: 4
 Info (12021): Found 1 design units, including 1 entities, in source file ComunicacaoSPI.v
     Info (12023): Found entity 1: ComunicacaoSPI File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/ComunicacaoSPI.v Line: 1
-Info (12021): Found 3 design units, including 3 entities, in source file Periferico.v
+Info (12021): Found 1 design units, including 1 entities, in source file Periferico.v
     Info (12023): Found entity 1: Periferico File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Periferico.v Line: 1
-    Info (12023): Found entity 2: RegistradorOUT File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Periferico.v Line: 6
-    Info (12023): Found entity 3: RegistradorIN File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Periferico.v Line: 16
-Error (10228): Verilog HDL error at Controlador.v(11): module "RegistradorOUT" cannot be declared more than once File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Controlador.v Line: 11
-Info (10499): HDL info at Periferico.v(6): see declaration for object "RegistradorOUT" File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Periferico.v Line: 6
-Error (10112): Ignored design unit "RegistradorIN" at Controlador.v(21) due to previous errors File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Controlador.v Line: 21
-Info (12021): Found 0 design units, including 0 entities, in source file Controlador.v
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 1 warning
+Info (12021): Found 1 design units, including 1 entities, in source file Controlador.v
+    Info (12023): Found entity 1: Controlador File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/Controlador.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file RegistradorPISO.v
+    Info (12023): Found entity 1: RegistradorPISO File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/RegistradorPISO.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file RegistradorSIPO.v
+    Info (12023): Found entity 1: RegistradorSIPO File: /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/RegistradorSIPO.v Line: 1
+Info (12127): Elaborating entity "ComunicacaoSPI" for the top level hierarchy
+Warning (12158): Entity "ComunicacaoSPI" contains only dangling pins
+Error (12061): Can't synthesize current design -- Top partition does not contain any logic
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 1 error, 2 warnings
     Error: Peak virtual memory: 391 megabytes
-    Error: Processing ended: Sun Nov  8 17:41:50 2026
-    Error: Elapsed time: 00:00:02
+    Error: Processing ended: Sun Nov  8 19:28:27 2026
+    Error: Elapsed time: 00:00:01
     Error: Total CPU time (on all processors): 00:00:00
 
 

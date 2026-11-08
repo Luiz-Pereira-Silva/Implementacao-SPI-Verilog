@@ -1,0 +1,143 @@
+m255
+K4
+z2
+Z0 !s12c _opt1
+Z1 !s99 nomlopt
+!s12c _opt2
+R1
+R0
+R1
+Z2 !s12c _opt
+R1
+R2
+R1
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z3 d/home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1
+T_opt
+!i145 1
+!i144 0
+!s110 1794175993
+VPW;IMi]280>lZTXK2CKah0
+Z4 04 18 4 work RegistradorPISO_tb fast 0
+=1-ec4c8ce76927-6af0f3f9-6c962-3e2f
+R1
+Z5 !s12f OEM100
+Z6 !s12b OEM100
+Z7 !s124 OEM10U2 
+Z8 !s135 nogc
+o-quiet -auto_acc_if_foreign -work work
+Z9 tCvgOpt 0
+n@_opt
+Z10 OL;O;2025.2;82
+R3
+T_opt1
+!i145 1
+!i144 0
+!s110 1794177094
+VU4G8;kjViS<2miaB3GZec0
+R4
+=1-ec4c8ce76927-6af0f846-1d777-45ae
+R1
+R5
+R6
+R7
+R8
+Z11 o-quiet -auto_acc_if_foreign -work work +acc
+R9
+n@_opt1
+R10
+T_opt2
+!i145 1
+!i144 0
+!s110 1794176696
+VAg]8UQZK[>97e?@;i]^6b0
+04 15 4 work RegistradorPISO fast 0
+=1-ec4c8ce76927-6af0f6b8-88984-3fbb
+R1
+R5
+R6
+!s124 OEM10U1 
+R8
+R11
+R9
+n@_opt2
+R10
+R3
+vPeriferico
+2Periferico.v
+!s110 1794175015
+!i10b 1
+!s100 eTXG04W0>^QF5Qne:eOf:0
+IjS9@1]W5kahZFJe;bUAf21
+R3
+w1794173899
+8Periferico.v
+FPeriferico.v
+!i122 1
+L0 1 4
+Z12 VDg1SIo80bB@j0V0VzS_@n1
+Z13 OL;L;2025.2;82
+r1
+!s85 0
+31
+!s108 1794175015.000000
+!s107 Periferico.v|
+!s90 -reportprogress|300|Periferico.v|
+!i113 0
+Z14 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R9
+n@periferico
+vRegistradorPISO
+2RegistradorPISO.v
+!s110 1794177069
+!i10b 1
+!s100 iI[Ihbfz=HlS1nlVJcEX31
+IS2PY_B52IFba6@^QEjVYY3
+R3
+w1794176644
+8RegistradorPISO.v
+FRegistradorPISO.v
+!i122 8
+L0 1 20
+R12
+R13
+r1
+!s85 0
+31
+!s108 1794177069.000000
+!s107 RegistradorPISO.v|
+!s90 -reportprogress|300|RegistradorPISO.v|
+!i113 0
+R14
+R9
+n@registrador@p@i@s@o
+vRegistradorPISO_tb
+2RegistradorPISO_tb.v
+!s110 1794177062
+!i10b 1
+!s100 NoEaTd?=97Kb?hX[`j:PP0
+I6TKgVk=j?b=[O`lUCznJ00
+R3
+w1794177045
+8RegistradorPISO_tb.v
+FRegistradorPISO_tb.v
+!i122 7
+L0 4 85
+R12
+R13
+r1
+!s85 0
+31
+!s108 1794177062.000000
+!s107 RegistradorPISO_tb.v|
+!s90 -reportprogress|300|RegistradorPISO_tb.v|
+!i113 0
+R14
+R9
+n@registrador@p@i@s@o_tb

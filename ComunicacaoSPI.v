@@ -1,3 +1,2 @@
-module ComunicacaoSPI();
-	
+module ComunicacaoSPI;
 endmodule
