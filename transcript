@@ -1,0 +1,141 @@
+# //  Questa Altera Starter FPGA Edition-64
+# //  Version 2025.2 linux_x86_64 May 31 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Project file /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1/SPI_Testbenches.mpf was not found.
+# Unable to open project.
+pwd
+# /home/luizpereirasilva/Faculdade/ArquiteturaNC/AtividadePraticaVerilog1
+do /scripts/simular_Periferico.do
+# Cannot open macro file: /scripts/simular_Periferico.do
+do ./scripts/simular_Periferico.do
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:16:42 on Nov 11,2026
+# vlog -reportprogress 300 RegistradorPISO.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module RegistradorPISO
+# 
+# Top level modules:
+# 	RegistradorPISO
+# End time: 18:16:42 on Nov 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:16:42 on Nov 11,2026
+# vlog -reportprogress 300 RegistradorSIPO.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module RegistradorSIPO
+# 
+# Top level modules:
+# 	RegistradorSIPO
+# End time: 18:16:42 on Nov 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:16:42 on Nov 11,2026
+# vlog -reportprogress 300 Periferico.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module Periferico
+# 
+# Top level modules:
+# 	Periferico
+# End time: 18:16:43 on Nov 11,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:16:43 on Nov 11,2026
+# vlog -reportprogress 300 ./testes/Periferico_tb.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module Periferico_tb
+# 
+# Top level modules:
+# 	Periferico_tb
+# End time: 18:16:43 on Nov 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Note: (vsim-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# vsim -voptargs="+acc" work.Periferico_tb 
+# Start time: 18:16:43 on Nov 11,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.Periferico_tb(fast)
+# Loading work.Periferico(fast)
+# Loading work.RegistradorSIPO(fast)
+# Loading work.RegistradorPISO(fast)
+# ----------------------------------
+#  INICIANDO TESTES DO SPI PERIPHERAL
+# ----------------------------------
+# 
+# TESTE 1: Transferência completa
+# Transferência concluída!
+# TX: a5 | RX: 3c
+# 
+# TESTE 2: Cancelamento de transferência
+# Transferência parcial descartada corretamente.
+# 
+# TESTE 3: Periférico deselecionado
+# SCLK ignorado corretamente.
+# 
+# TESTE 4: Reinicialização da contagem de bits
+# Transferência concluída!
+# TX: 96 | RX: 5a
+# 
+# ----------------------------------
+#  TODOS OS TESTES FORAM CONCLUIDOS!
+# ----------------------------------
+# ** Note: $finish    : ./testes/Periferico_tb.v(312)
+#    Time: 4475 ns  Iteration: 1  Instance: /Periferico_tb
+# 1
+# Break in Module Periferico_tb at ./testes/Periferico_tb.v line 312
+# 0 ps
+# 4698750 ps
+quit -sim
+# End time: 18:16:59 on Nov 11,2026, Elapsed time: 0:00:16
+# Errors: 0, Warnings: 1
+do ./scripts/simular_RegistradorPISO.do
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:17:19 on Nov 11,2026
+# vlog -reportprogress 300 RegistradorPISO.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module RegistradorPISO
+# 
+# Top level modules:
+# 	RegistradorPISO
+# End time: 18:17:19 on Nov 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 18:17:19 on Nov 11,2026
+# vlog -reportprogress 300 ./testes/RegistradorPISO_tb.v 
+# ** Note: (vlog-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# -- Compiling module RegistradorPISO_tb
+# 
+# Top level modules:
+# 	RegistradorPISO_tb
+# End time: 18:17:19 on Nov 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Note: (vsim-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# vsim -voptargs="+acc" work.RegistradorPISO_tb 
+# Start time: 18:17:19 on Nov 11,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) '/home/luizpereirasilva/Programas/QuestaStarter/25.1std/questa_fse/linux_x86_64/../modelsim.ini' is used as the ini file.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.RegistradorPISO_tb(fast)
+# Loading work.RegistradorPISO(fast)
+# ** Note: $finish    : ./testes/RegistradorPISO_tb.v(84)
+#    Time: 32 ns  Iteration: 0  Instance: /RegistradorPISO_tb
+# 1
+# Break in Module RegistradorPISO_tb at ./testes/RegistradorPISO_tb.v line 84
+# 0 ps
+# 33600 ps
+quit -sim
+# End time: 18:17:40 on Nov 11,2026, Elapsed time: 0:00:21
+# Errors: 0, Warnings: 1

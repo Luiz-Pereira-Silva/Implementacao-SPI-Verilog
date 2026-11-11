@@ -2,11 +2,13 @@
 *.bak
 *.qws
 *.do
+*.sh
 
 #Diretórios
 output_files/
 db/
 work/
+scripts/
 
 #Arquivos
 vsim.wlf
