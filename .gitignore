@@ -1,0 +1,12 @@
+#Tipos de arquivo
+*.bak
+*.qws
+*.do
+
+#Diretórios
+output_files/
+db/
+work/
+
+#Arquivos
+vsim.wlf
