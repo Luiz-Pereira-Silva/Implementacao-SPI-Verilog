@@ -2,6 +2,11 @@ module RegistradorPISO (input wire       clk, clr_n, load, shift,
 								input wire [7:0] parallel_in, 
 								output reg       serial_out);
 	reg [7:0] registrador;
+	
+	initial begin
+		serial_out <= 0;
+	end
+	
 	always @(posedge clk or negedge clr_n) begin
 		if (clr_n == 0) begin
 			registrador <= 8'h0;
@@ -11,7 +16,7 @@ module RegistradorPISO (input wire       clk, clr_n, load, shift,
 			end
 			else begin
 				if (shift) begin
-					registrador <= {registrador[6:0], 1'h0};
+					registrador = {registrador[6:0], 1'h0};
 				end
 			end
 		end

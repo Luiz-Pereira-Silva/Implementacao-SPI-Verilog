@@ -1,0 +1,84 @@
+```verilog
+`timescale 1ns/1ps
+
+module testbench;
+
+    // =========================================================
+    // Sinais de entrada
+    // =========================================================
+
+    reg clk;
+    reg clr_n;
+    reg sclk;
+    reg cs_n;
+    reg pico;
+    reg parallel_load;
+
+    reg [7:0] parallel_in;
+
+
+    // =========================================================
+    // Sinais de saída
+    // =========================================================
+
+    wire [7:0] parallel_out;
+    wire rx_valid;
+    wire cipo;
+
+
+    // =========================================================
+    // Instância do módulo
+    // =========================================================
+
+    Periferico uut (
+        .clk(clk),
+        .clr_n(clr_n),
+        .sclk(sclk),
+        .cs_n(cs_n),
+        .pico(pico),
+        .parallel_load(parallel_load),
+        .parallel_in(parallel_in),
+
+        .parallel_out(parallel_out),
+        .rx_valid(rx_valid),
+        .cipo(cipo)
+    );
+
+
+    // =========================================================
+    // Clock principal
+    // Período = 10 ns
+    // =========================================================
+
+    initial begin
+        clk = 0;
+
+        forever begin
+            #5 clk = ~clk;
+        end
+    end
+
+
+    // =========================================================
+    // Teste principal
+    // =========================================================
+
+    initial begin
+
+        // -------------------------------
+        // Estado inicial
+        // -------------------------------
+
+        clr_n = 0;
+        sclk = 0;
+        cs_n = 1;
+        pico = 0;
+        parallel_load = 0;
+        parallel_in = 8'b00000000;
+
+
+        // -------------------------------
+        // Reset
+        // -------------------------------
+
+        #
