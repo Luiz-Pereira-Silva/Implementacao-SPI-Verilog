@@ -20,7 +20,6 @@ module RegistradorSIPO (input wire 		  clk, clr_n, sample, last_bit, serial_in,
 				if (last_bit) begin
 					if (flag_valid == 0) begin
 						valid      <= 1'h1;
-						flag_valid <= 1'h1;
 					end
 					parallel_out <= registrador;
 				end
@@ -29,9 +28,8 @@ module RegistradorSIPO (input wire 		  clk, clr_n, sample, last_bit, serial_in,
 				end
 			end
 			
-			if (flag_valid && last_bit) begin
-				valid      <= 0;
-				flag_valid <= 0;
+			if (valid) begin
+				valid <= 0;
 			end
 		end
 	end
