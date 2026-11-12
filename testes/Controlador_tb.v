@@ -91,7 +91,7 @@ module Controlador_tb;
     end
 
 
-    always @(negedge sclk) begin
+    always @(posedge sclk) begin
 
         if (busy) begin
 

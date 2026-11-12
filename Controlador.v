@@ -1,4 +1,4 @@
-module Controlador #(parameter integer DIV = 10)
+module Controlador #(parameter integer DIV = 1010)
 						  (input wire 		   clk, clr_n, cipo, parallel_load, 
 						   input wire        start, peripheral_sel,
 						   input wire  [7:0] parallel_in,
@@ -12,11 +12,10 @@ module Controlador #(parameter integer DIV = 10)
 	localparam [1:0] SETUP 	  = 2'h1;
 	localparam [1:0] TRANSFER = 2'h2;
 	localparam [1:0] DONE 	  = 2'h3;
-	localparam       OVERFLOW = DIV -1;
 						
 	reg 		  flag_sclk, last_bit, shift, load, sample, clr_error;
 	reg        enable_contador;
-	reg  [7:0] contador_sclk;
+	reg  [7:0] contador_sclk, overflow;
 	reg  [2:0] contador;
 	reg  [1:0] estado;
 	wire 		  clr_sipo;
@@ -47,41 +46,8 @@ module Controlador #(parameter integer DIV = 10)
 	//Divisor de SCLK
 	
 	always @(posedge clk) begin
-
-    if (!clr_n) begin
-
-        contador_sclk <= 0;
-        sclk <= 0;
-
-    end
-    else if (enable_contador) begin
-
-        if (contador_sclk == DIV - 1) begin
-
-            contador_sclk <= 0;
-            sclk <= ~sclk;
-
-        end
-        else begin
-
-            contador_sclk <= contador_sclk + 1;
-
-        end
-
-    end
-    else begin
-
-        contador_sclk <= 0;
-        sclk <= 0;
-
-    end
-
-end
-	
-	/*
-	always @(posedge clk) begin
 		if (enable_contador) begin
-			if (contador_sclk == OVERFLOW) begin
+			if (contador_sclk == (DIV - 1)) begin
 				contador_sclk <= 0;
 				if (sclk) begin
 					sclk <= 0;
@@ -96,10 +62,9 @@ end
 		end
 		else begin
 			contador_sclk <= 0;
-			sclk 		<= 0;
+			sclk 		     <= 0;
 		end
 	end
-	*/
 	
 	// Maquina de estados
 	
@@ -109,12 +74,17 @@ end
 			done		 <= 0;
 			if (start) begin
 				estado <= SETUP;
+				busy <= 1;
 			end
 		end
 		
 		if (estado == SETUP) begin
-			busy <= 1;
-			cs_n = peripheral_sel ? 2'b01 : 2'b10;
+			if (peripheral_sel) begin
+				cs_n = 2'b01;
+			end
+			else begin
+				cs_n = 2'b10;
+			end
 			enable_contador <= 1;
 			estado <= TRANSFER;
 		end
@@ -125,7 +95,7 @@ end
 				enable_contador <= 0;
 			end
 		end
-		
+
 		if (estado == DONE) begin
 			done 		 <= 1'h1;
 			estado 	 <= IDLE;

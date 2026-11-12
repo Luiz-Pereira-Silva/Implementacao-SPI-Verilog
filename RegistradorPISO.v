@@ -16,7 +16,7 @@ module RegistradorPISO (input wire       clk, clr_n, load, shift,
 			end
 			else begin
 				if (shift) begin
-					registrador = {registrador[6:0], 1'h0};
+					registrador <= {registrador[6:0], 1'h0};
 				end
 			end
 		end
