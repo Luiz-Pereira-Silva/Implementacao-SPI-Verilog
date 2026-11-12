@@ -1,4 +1,4 @@
-module Controlador #(parameter integer DIV = 1010)
+module Controlador #(parameter integer DIV = 10)
 						  (input wire 		   clk, clr_n, cipo, parallel_load, 
 						   input wire        start, peripheral_sel,
 						   input wire  [7:0] parallel_in,
@@ -15,7 +15,7 @@ module Controlador #(parameter integer DIV = 1010)
 						
 	reg 		  flag_sclk, last_bit, shift, load, sample, clr_error;
 	reg        enable_contador;
-	reg  [7:0] contador_sclk, overflow;
+	reg  [7:0] contador_sclk;
 	reg  [2:0] contador;
 	reg  [1:0] estado;
 	wire 		  clr_sipo;
@@ -92,6 +92,7 @@ module Controlador #(parameter integer DIV = 1010)
 		if (estado == TRANSFER) begin
 			if (last_bit) begin
 				estado <= DONE;
+				last_bit <= 0;
 				enable_contador <= 0;
 			end
 		end
@@ -107,7 +108,7 @@ module Controlador #(parameter integer DIV = 1010)
 	//Logica dos registradores
 	
 	always @(posedge clk) begin
-		if(enable_contador) begin
+		if (enable_contador) begin
 			if (sclk) begin
 				if (flag_sclk == 0) begin
 					flag_sclk  <= 1;

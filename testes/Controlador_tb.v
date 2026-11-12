@@ -223,6 +223,8 @@ module Controlador_tb;
         @(posedge clk);
 
         start = 0;
+		  
+		  @(posedge clk);
 
 
         // Aguarda o controlador sair de IDLE
@@ -389,6 +391,10 @@ module Controlador_tb;
         wait(busy == 1);
 
         #1;
+		  
+		  @(posedge clk);
+		  
+		  @(posedge clk);
 
 
         if (cs_n === 2'b01)
