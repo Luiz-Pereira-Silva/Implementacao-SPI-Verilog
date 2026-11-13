@@ -36,7 +36,7 @@ module Controlador_tb;
     // =========================================================
 
     Controlador #(
-        .DIV(2)
+        .DIV(10)
     ) uut (
 
         .clk(clk),

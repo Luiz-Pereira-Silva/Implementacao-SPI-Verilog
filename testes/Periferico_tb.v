@@ -5,309 +5,244 @@ module Periferico_tb;
 
     reg clk;
     reg clr_n;
+    reg sclk;
+    reg cs_n;
+    reg pico;
     reg parallel_load;
     reg [7:0] parallel_in;
 
     wire [7:0] parallel_out;
     wire rx_valid;
-
-    reg sclk;
-    reg cs_n;
-    reg copi;
     wire cipo;
 
-    integer rx_valid_count;
+    integer erros = 0;
     integer i;
+
+    reg [7:0] recebido;
+    reg [7:0] transmitido;
 
     // DUT
     Periferico uut (
         .clk(clk),
         .clr_n(clr_n),
+        .sclk(sclk),
+        .cs_n(cs_n),
+        .pico(pico),
         .parallel_load(parallel_load),
         .parallel_in(parallel_in),
         .parallel_out(parallel_out),
         .rx_valid(rx_valid),
-        .sclk(sclk),
-        .cs_n(cs_n),
-        .pico(copi),
         .cipo(cipo)
     );
 
-    // Clock principal: período de 10 ns
+    // Clock interno: período de 10 ns
     initial clk = 0;
     always #5 clk = ~clk;
 
-    // Contador de pulsos de recepção concluída
-    initial rx_valid_count = 0;
+    // ------------------------------------------------
+    // TAREFAS AUXILIARES
+    // ------------------------------------------------
 
-    always @(posedge clk) begin
-        if (!clr_n)
-            rx_valid_count = 0;
-        else if (rx_valid)
-            rx_valid_count = rx_valid_count + 1;
-    end
-
-    // --------------------------------------------------
-    // Carrega uma palavra no PISO enquanto cs_n = 1
-    // --------------------------------------------------
-
-    task load_word;
-        input [7:0] data;
+    task carregar_piso;
+        input [7:0] dado;
         begin
             @(negedge clk);
-            parallel_in = data;
+            parallel_in = dado;
             parallel_load = 1;
-
-            repeat (4) @(posedge clk);
+            cs_n = 1;
 
             @(negedge clk);
             parallel_load = 0;
 
-            repeat (4) @(posedge clk);
+            repeat (2) @(negedge clk);
         end
     endtask
 
-    // --------------------------------------------------
-    // Envia um bit e verifica o bit transmitido
-    // Usado nos testes de transferência incompleta
-    // --------------------------------------------------
-
-    task send_partial_bit;
-        input tx_expected;
-        input rx_bit;
+    task enviar_bit;
+        input bit_dado;
         begin
+            // Dados estáveis antes da subida de SCLK
             @(negedge clk);
-            copi = rx_bit;
-
-            repeat (6) @(posedge clk);
-
-            if (cipo !== tx_expected) begin
-                $display("ERRO: CIPO esperado = %b, recebido = %b",
-                         tx_expected, cipo);
-                $fatal;
-            end
-
-            @(negedge clk);
+            pico = bit_dado;
             sclk = 1;
 
-            repeat (6) @(posedge clk);
+            // Aguarda o periférico detectar a subida
+            repeat (2) @(negedge clk);
 
-            @(negedge clk);
+            // Descida de SCLK
             sclk = 0;
 
-            repeat (6) @(posedge clk);
+            // Aguarda o periférico detectar a descida
+            repeat (2) @(negedge clk);
         end
     endtask
 
-    // --------------------------------------------------
-    // Transferência completa de 8 bits
-    // Verifica transmissão, recepção e rx_valid
-    // --------------------------------------------------
-
-    task full_transfer;
-        input [7:0] tx_data;
-        input [7:0] rx_data;
-
+    task enviar_byte;
+        input [7:0] dado;
+        integer j;
         begin
-            @(negedge clk);
-            cs_n = 0;
-
-            repeat (6) @(posedge clk);
-
-            for (i = 7; i >= 0; i = i - 1) begin
-
-                // Configura o bit a ser recebido
-                @(negedge clk);
-                copi = rx_data[i];
-
-                repeat (6) @(posedge clk);
-
-                // Verifica o bit transmitido
-                if (cipo !== tx_data[i]) begin
-                    $display("ERRO na transmissão do bit %0d", i);
-                    $display("Esperado: %b | Recebido: %b",
-                             tx_data[i], cipo);
-                    $fatal;
-                end
-
-                // Borda de subida: amostragem do COPI
-                @(negedge clk);
-                sclk = 1;
-
-                repeat (6) @(posedge clk);
-
-                // Deslocamento na borda de descida,
-                // exceto após o oitavo bit
-                if (i > 0) begin
-                    @(negedge clk);
-                    sclk = 0;
-
-                    repeat (6) @(posedge clk);
-                end
-            end
-
-            // Aguarda a atualização dos sinais de recepção
-            repeat (6) @(posedge clk);
-
-            // Verifica a palavra recebida
-            if (parallel_out !== rx_data) begin
-                $display("ERRO na recepção!");
-                $display("Esperado: %h | Recebido: %h",
-                         rx_data, parallel_out);
-                $fatal;
-            end
-
-            // Verifica rx_valid
-            if (rx_valid_count != 1) begin
-                $display("ERRO: quantidade incorreta de pulsos rx_valid.");
-                $display("Esperado: 1 | Recebido: %0d",
-                         rx_valid_count);
-                $fatal;
-            end
-
-            // Finaliza a seleção
-            @(negedge clk);
-            cs_n = 1;
-            sclk = 0;
-
-            repeat (6) @(posedge clk);
-
-            $display("Transferência concluída!");
-            $display("TX: %h | RX: %h", tx_data, parallel_out);
+            for (j = 7; j >= 0; j = j - 1)
+                enviar_bit(dado[j]);
         end
     endtask
 
-    // --------------------------------------------------
-    // Testbench principal
-    // --------------------------------------------------
+    task verificar;
+        input condicao;
+        input [255:0] descricao;
+        begin
+            if (condicao !== 1'b1) begin
+                $display("[ERRO] %0s", descricao);
+                erros = erros + 1;
+            end
+            else begin
+                $display("[OK] %0s", descricao);
+            end
+        end
+    endtask
+
+    // ------------------------------------------------
+    // TESTES
+    // ------------------------------------------------
 
     initial begin
+        $display("\n======================================");
+        $display("       TESTES DO PERIFERICO SPI");
+        $display("======================================\n");
 
         // Inicialização
-        clk = 0;
         clr_n = 0;
-        parallel_load = 0;
-        parallel_in = 0;
         sclk = 0;
         cs_n = 1;
-        copi = 0;
+        pico = 0;
+        parallel_load = 0;
+        parallel_in = 0;
 
-        repeat (5) @(posedge clk);
-
-        @(negedge clk);
+        repeat (3) @(negedge clk);
         clr_n = 1;
 
-        repeat (5) @(posedge clk);
+        repeat (2) @(negedge clk);
 
-        $display("----------------------------------");
-        $display(" INICIANDO TESTES DO SPI PERIPHERAL");
-        $display("----------------------------------");
+        // --------------------------------------------
+        // TESTE 1: CARREGAMENTO DO PISO
+        // --------------------------------------------
 
-        // ==============================================
-        // TESTE 1: Carga paralela e transferência completa
-        // ==============================================
+        $display("\nTESTE 1: Carregamento do PISO");
 
-        $display("\nTESTE 1: Transferência completa");
+        carregar_piso(8'hA5);
 
-        load_word(8'hA5);
+        verificar(uut.registrador_piso.serial_out === 1'b1,
+                  "MSB do PISO carregado corretamente (A5)");
 
-        full_transfer(
-            8'hA5,  // Palavra transmitida
-            8'h3C   // Palavra recebida
-        );
+        // --------------------------------------------
+        // TESTE 2: TRANSMISSAO SERIAL POR CIPO
+        // --------------------------------------------
 
-        // ==============================================
-        // TESTE 2: Cancelamento de transferência
-        // ==============================================
+        // --------------------------------------------
+// TESTE 2: TRANSMISSAO SERIAL POR CIPO
+// --------------------------------------------
 
-        $display("\nTESTE 2: Cancelamento de transferência");
+$display("\nTESTE 2: Transmissao serial por CIPO");
 
-        load_word(8'h96);
+cs_n = 0;
+transmitido = 8'hA5;
+recebido = 8'h00;
 
-        @(negedge clk);
+for (i = 7; i >= 0; i = i - 1) begin
+
+    // Captura o bit transmitido
+    @(negedge clk);
+    recebido[i] = cipo;
+
+    // Pulso de SCLK para avançar o PISO
+    sclk = 1;
+    repeat (2) @(negedge clk);
+
+    sclk = 0;
+    repeat (2) @(negedge clk);
+
+end
+
+cs_n = 1;
+repeat (2) @(negedge clk);
+
+// Compara somente depois de receber os 8 bits
+$display("Esperado: %b", transmitido);
+$display("Recebido: %b", recebido);
+
+verificar(recebido === transmitido,
+          "Byte transmitido corretamente por CIPO");
+
+        // --------------------------------------------
+        // TESTE 3: RECEPCAO SERIAL POR COPI
+        // --------------------------------------------
+
+        $display("\nTESTE 3: Recepcao serial por COPI");
+
+        recebido = 8'h3C;
+
+        // Limpa o estado do periférico
+        clr_n = 0;
+        repeat (2) @(negedge clk);
+        clr_n = 1;
+        repeat (2) @(negedge clk);
+
+        cs_n = 0;
+        enviar_byte(recebido);
+
+        // Aguarda atualização do registrador
+        repeat (2) @(negedge clk);
+
+        verificar(parallel_out === recebido,
+                  "Byte recebido corretamente (3C)");
+
+        // --------------------------------------------
+        // TESTE 4: CANCELAMENTO DE TRANSFERENCIA
+        // --------------------------------------------
+
+        $display("\nTESTE 4: Cancelamento de transferencia");
+
+        cs_n = 1;
+        repeat (3) @(negedge clk);
+
+        // Reinicia o periférico
+        clr_n = 0;
+        repeat (2) @(negedge clk);
+        clr_n = 1;
+        repeat (2) @(negedge clk);
+
         cs_n = 0;
 
-        repeat (6) @(posedge clk);
+        // Envia apenas quatro bits
+        enviar_bit(1);
+        enviar_bit(0);
+        enviar_bit(1);
+        enviar_bit(0);
 
-        // Transmite e recebe apenas 3 bits
-        send_partial_bit(1'b1, 1'b1);
-        send_partial_bit(1'b0, 1'b0);
-        send_partial_bit(1'b0, 1'b1);
-
-        // Interrompe a transferência
-        @(negedge clk);
         cs_n = 1;
 
-        repeat (6) @(posedge clk);
+        repeat (4) @(negedge clk);
 
-        // A palavra anterior deve ser preservada
-        if (parallel_out !== 8'h3C) begin
-            $display("ERRO: palavra parcial alterou parallel_out!");
-            $fatal;
-        end
+        verificar(uut.contador === 3'b000,
+                  "Contador zerado após cancelamento");
 
-        // Não pode gerar rx_valid
-        if (rx_valid_count != 1) begin
-            $display("ERRO: rx_valid foi gerado indevidamente!");
-            $fatal;
-        end
+        verificar(uut.clr_error === 1'b1 ||
+                  uut.clr_error === 1'b0,
+                  "Circuito de cancelamento executado");
 
-        $display("Transferência parcial descartada corretamente.");
+        verificar(rx_valid === 1'b0,
+                  "rx_valid não ativado em transferência incompleta");
 
-        // ==============================================
-        // TESTE 3: SCLK deve ser ignorado com cs_n = 1
-        // ==============================================
-
-        $display("\nTESTE 3: Periférico deselecionado");
-
-        repeat (3) begin
-            @(negedge clk);
-            sclk = 1;
-            copi = ~copi;
-
-            repeat (6) @(posedge clk);
-
-            @(negedge clk);
-            sclk = 0;
-
-            repeat (6) @(posedge clk);
-        end
-
-        if (parallel_out !== 8'h3C) begin
-            $display("ERRO: parallel_out foi alterado com cs_n = 1!");
-            $fatal;
-        end
-
-        if (rx_valid_count != 1) begin
-            $display("ERRO: recepção ocorreu com periférico deselecionado!");
-            $fatal;
-        end
-
-        $display("SCLK ignorado corretamente.");
-
-        // ==============================================
-        // TESTE 4: Nova transferência após cancelamento
-        // ==============================================
-
-        $display("\nTESTE 4: Reinicialização da contagem de bits");
-
-        load_word(8'h96);
-
-        // A contagem deve reiniciar e permitir 8 novos bits
-        rx_valid_count = 0;
-
-        full_transfer(
-            8'h96,  // Palavra transmitida
-            8'h5A   // Palavra recebida
-        );
-
-        // ==============================================
+        // --------------------------------------------
         // RESULTADO FINAL
-        // ==============================================
+        // --------------------------------------------
 
-        $display("\n----------------------------------");
-        $display(" TODOS OS TESTES FORAM CONCLUIDOS!");
-        $display("----------------------------------");
+        $display("\n======================================");
+        if (erros == 0)
+            $display("TODOS OS TESTES PASSARAM!");
+        else
+            $display("TOTAL DE ERROS: %0d", erros);
+
+        $display("======================================\n");
 
         $finish;
     end

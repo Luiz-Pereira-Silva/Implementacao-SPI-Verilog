@@ -13,7 +13,7 @@ module Controlador #(parameter integer DIV = 10)
 	localparam [1:0] TRANSFER = 2'h2;
 	localparam [1:0] DONE 	  = 2'h3;
 						
-	reg 		  flag_sclk, last_bit, shift, load, sample, clr_error;
+	reg 		  flag_sclk, flag_sclk_inicio, last_bit, shift, load, sample, clr_error;
 	reg        enable_contador;
 	reg  [7:0] contador_sclk;
 	reg  [2:0] contador;
@@ -85,6 +85,7 @@ module Controlador #(parameter integer DIV = 10)
 			else begin
 				cs_n = 2'b10;
 			end
+			flag_sclk_inicio <= 1;
 			enable_contador <= 1;
 			estado <= TRANSFER;
 		end
@@ -92,8 +93,8 @@ module Controlador #(parameter integer DIV = 10)
 		if (estado == TRANSFER) begin
 			if (last_bit) begin
 				estado <= DONE;
-				last_bit <= 0;
 				enable_contador <= 0;
+				flag_sclk_inicio <= 0;
 			end
 		end
 
@@ -112,13 +113,7 @@ module Controlador #(parameter integer DIV = 10)
 			if (sclk) begin
 				if (flag_sclk == 0) begin
 					flag_sclk  <= 1;
-					contador   <= contador + 1;
-					if (contador == 7) begin
-						last_bit <= 1'h1;
-					end
-					else begin
-						last_bit <= 1'h0;
-					end
+					
 					sample <= 1'h1;
 				end
 				else begin
@@ -127,6 +122,13 @@ module Controlador #(parameter integer DIV = 10)
 			end
 			else begin
 				if (flag_sclk == 1) begin
+					contador = contador + 1;
+					if (contador == 0) begin
+						last_bit <= 1'h1;
+					end
+					else begin
+						last_bit <= 1'h0;
+					end
 					flag_sclk <= 0;
 					if (contador != 0) begin
 						shift <= 1;
@@ -138,6 +140,9 @@ module Controlador #(parameter integer DIV = 10)
 			end
 		end
 		else begin
+			
+			last_bit <= 0;
+		
 			if (parallel_load) begin
 				load <= 1'h1;
 			end
